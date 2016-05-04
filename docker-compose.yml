@@ -1,0 +1,19 @@
+web:
+    build: .
+    volumes:
+        - ./app:/var/www/galery
+        - ./vhost.conf:/etc/apache2/sites-enabled/vhost.conf
+    ports:
+        - "8080:80"
+    links:
+        - db
+
+db:
+    image: mysql
+    ports:
+        - "3306:3306"
+    environment:
+        MYSQL_ROOT_PASSWORD: 123qwe
+        MYSQL_USER: galery
+        MYSQL_PASSWORD: galery
+        MYSQL_DATABASE: galery
