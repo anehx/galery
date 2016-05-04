@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/Controller.class.php';
+require_once __DIR__ . '/ProtectedController.class.php';
 
 /**
  * The NotFoundController
@@ -9,7 +9,7 @@ require_once __DIR__ . '/Controller.class.php';
  * @license MIT
  * @copyright Copyright (c) 2015, Jonas Metzener
  */
-class NotFoundController extends Controller {
+class NotFoundController extends ProtectedController {
 
     /**
      * Displays a 404 error

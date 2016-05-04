@@ -2,6 +2,7 @@
 
 // include_once __DIR__ . '/../models/User.class.php';
 include_once __DIR__ . '/../utils/Request.class.php';
+include_once __DIR__ . '/../utils/Template.class.php';
 
 /**
  * The main controller class
@@ -13,15 +14,7 @@ include_once __DIR__ . '/../utils/Request.class.php';
 class Controller {
 
     protected static function render($tpl) {
-        $base = file_get_contents(__DIR__ . '/../views/base.html');
-
-        ob_start();
-        require_once __DIR__ . '/../views/' . $tpl . '.tpl';
-        $body = ob_get_contents();
-        ob_end_clean();
-
-        echo str_replace('{{BODY}}', $body, $base);
-        exit;
+        echo Template::render($tpl);
     }
 
     /**
@@ -31,6 +24,8 @@ class Controller {
      * @return Request
      */
     protected static function authorize($request) {
+        return false;
+        /*
         try {
             $token = str_replace('Basic ', '', $request->getHeader('Authorization'));
 
@@ -55,6 +50,7 @@ class Controller {
         }
 
         return $request;
+        */
     }
 
     /**
@@ -63,12 +59,10 @@ class Controller {
      * @param string $params
      * @return void
      */
-    public static function handle($params = array()) {
-        header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-        header('Access-Control-Allow-Headers: Content-Type, Authorization, User-Agent');
-
-        $request = new Request();
+    public static function handle($params = array(), $request = null) {
+        if (is_null($request)) {
+            $request = new Request();
+        }
 
         switch ($request->method) {
             case 'GET':
@@ -91,7 +85,7 @@ class Controller {
      * @return void
      */
     protected static function get($request, $params) {
-        static::response(array(), 404, 'No GET handler defined for this route.');
+        return null;
     }
 
     /**
@@ -102,7 +96,7 @@ class Controller {
      * @return void
      */
     protected static function post($request, $params) {
-        static::response(array(), 404, 'No POST handler defined for this route.');
+        return null;
     }
 
 }
