@@ -7,4 +7,8 @@ class LoginController extends Controller {
     protected static function get($request, $params) {
         echo static::render('login');
     }
+
+    protected static function post($request, $params) {
+        echo static::render('login');
+    }
 }
