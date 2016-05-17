@@ -4,7 +4,7 @@ SET CHARSET 'utf8';
 
 CREATE TABLE `user` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(50) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
