@@ -1,19 +1,25 @@
 <div class="login">
-  <form class="form-inline" method="post">
-    <div class="input-group">
-      <div class="input-group-addon">
-        <span class="glyphicon glyphicon-user"></span>
+  <form method="post">
+    <div class="panel panel-default panel-login">
+      <div class="panel-heading">
+        <div class="logo">
+          <span class="glyphicon glyphicon-camera"></span>
+        </div>
+        <h1>Login</h1>
       </div>
-      <input class="form-control" type="text" placeholder="Username" name="username">
-    </div>
-    <div class="input-group">
-      <div class="input-group-addon">
-        <span class="glyphicon glyphicon-lock"></span>
+      <div class="panel-body">
+        <div class="form-group">
+          <input class="form-control" type="text" placeholder="Username" name="username">
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="password" placeholder="Password" name="password">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-on"></span> Login</button>
+        </div>
+        <a href="/register">Registrieren</a>
       </div>
-      <input class="form-control" type="password" placeholder="Password" name="password">
     </div>
-    <button class="btn btn-primary" type="submit">Login</button>
-    <br>
-    <a href="/register">Registrieren</a>
   </form>
+  <div class="copyrights">&copy; 2016 Jonas Metzener</div>
 </div>
