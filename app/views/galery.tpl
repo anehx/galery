@@ -1,5 +1,9 @@
 <div class="container page-content">
-  Galery name
+  <h1>
+    Galerie 1
+    <a href="/galery/1/edit"   class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+    <a href="/galery/1/delete" class="btn btn-danger  btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+  </h1>
   <div class="image-list">
     <div class="image-item">
       <img src="http://placekitten.com/200/400">
@@ -9,12 +13,6 @@
     </div>
     <div class="image-item">
       <img src="http://placekitten.com/700/300">
-    </div>
-    <div class="image-item">
-      <img src="http://placekitten.com/600/500">
-    </div>
-    <div class="image-item">
-      <img src="http://placekitten.com/1000/500">
     </div>
     <div class="image-item">
       <img src="http://placekitten.com/1200/700">
