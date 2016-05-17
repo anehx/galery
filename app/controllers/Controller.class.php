@@ -24,7 +24,7 @@ class Controller {
      * @return Request
      */
     protected static function authorize($request) {
-        return false;
+        return true;
         /*
         try {
             $token = str_replace('Basic ', '', $request->getHeader('Authorization'));

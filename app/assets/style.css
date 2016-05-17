@@ -42,3 +42,140 @@ body, html {
 .panel-login .panel-body .btn {
   width: 100%;
 }
+
+.page-content {
+  padding-top: 50px;
+}
+
+.galery-list,
+.image-list {
+  padding: 10px 0;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.galery-item,
+.image-item {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  margin: 14px;
+  background-color: rgb(220, 220, 220);
+  border: 5px solid rgb(200, 200, 200);
+  cursor: pointer;
+  padding: 5px;
+  text-align: center;
+}
+
+.galery-item {
+  font-size: 20px;
+  font-weight: bold;
+  width: 200px;
+}
+
+.image-item img {
+  height: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.image-item-upload {
+  width: 200px;
+}
+
+.galery-item,
+.galery-item:active,
+.galery-item:focus,
+.galery-item:hover,
+.image-item-upload,
+.image-item-upload:active,
+.image-item-upload:focus,
+.image-item-upload:hover {
+  text-decoration: none;
+  color: #222;
+}
+
+.galery-item-new > .glyphicon,
+.image-item-upload > .glyphicon {
+  font-size: 50px;
+}
+
+.lightbox {
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.25);
+}
+
+.lightbox-container {
+  display: flex;
+  position: relative;
+  align-items: center;
+  flex-direction: column;
+  background: #222;
+  border-radius: 4px;
+  box-shadow: 0 0 20px 1px rgba(0,0,0,0.5);
+}
+
+.lightbox-image {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  text-align: center;
+  padding: 25px;
+}
+
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  font-size: 50px;
+  cursor: pointer;
+  top: calc(50% - 25px);
+}
+
+.lightbox-close {
+  position: absolute;
+  font-size: 25px;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+.lightbox-prev {
+  left: 0;
+}
+
+.lightbox-next {
+  right: 0;
+}
+
+.lightbox-image img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.lightbox-tags {
+  display: flex;
+  padding-bottom: 25px;
+}
+
+.tag {
+  background: rgb(230, 230, 230);
+  border-radius: 2px;
+  margin-right: 5px;
+  padding: 2px 5px;
+  min-width: 50px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+}
