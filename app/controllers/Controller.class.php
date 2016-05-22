@@ -23,42 +23,6 @@ class Controller {
     }
 
     /**
-     * Authorizes a request
-     *
-     * @param Request $request
-     * @return Request
-     */
-    protected static function authorize($request) {
-        return $_SESSION['isAuthenticated'];
-        /*
-        try {
-            $token = str_replace('Basic ', '', $request->getHeader('Authorization'));
-
-            $decrypted = base64_decode($token);
-
-            list($username, $password) = explode(':', $decrypted);
-
-            $user = User::find(array('username' => $username));
-
-            if (!$user) {
-                throw new Exception();
-            }
-            elseif (password_verify($password, $user->get('password'))) {
-                $request->user = $user;
-            }
-            else {
-                throw new Exception();
-            }
-        }
-        catch (Exception $e) {
-            static::response(array(), 401, 'Not Authorized');
-        }
-
-        return $request;
-        */
-    }
-
-    /**
      * Main handle function
      *
      * @param string $params

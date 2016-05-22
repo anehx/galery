@@ -12,7 +12,7 @@ class ProtectedController extends Controller {
     public static function handle($params = array(), $request = null) {
         $request = new Request();
 
-        if (!static::authorize($request)) {
+        if (!$_SESSION['isAuthenticated']) {
             static::redirect('/login');
         }
 
