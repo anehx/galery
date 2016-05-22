@@ -23,10 +23,9 @@ class DbManager {
      */
     public static function getInstance() {
         if (!isset(self::$_db)) {
-            $filename  = dirname(__FILE__).'/../db/db.sqlite';
-            self::$_db = new PDO('sqlite:'.$filename);
+            self::$_db = new PDO('mysql:host=db;dbname=galery;charset=utf8', 'galery', 'galery');
             self::$_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            self::$_db->exec('PRAGMA foreign_keys = ON;');
+            // self::$_db->exec('PRAGMA foreign_keys = ON;');
         }
 
         return self::$_db;

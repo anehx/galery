@@ -13,8 +13,7 @@ class ProtectedController extends Controller {
         $request = new Request();
 
         if (!static::authorize($request)) {
-            header('Location: /login');
-            exit;
+            static::redirect('/login');
         }
 
         parent::handle($params, $request);

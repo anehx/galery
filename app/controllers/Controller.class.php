@@ -17,6 +17,11 @@ class Controller {
         echo Template::render($tpl);
     }
 
+    protected static function redirect($url) {
+        header('Location: ' . $url);
+        exit;
+    }
+
     /**
      * Authorizes a request
      *
@@ -24,7 +29,7 @@ class Controller {
      * @return Request
      */
     protected static function authorize($request) {
-        return true;
+        return $_SESSION['isAuthenticated'];
         /*
         try {
             $token = str_replace('Basic ', '', $request->getHeader('Authorization'));

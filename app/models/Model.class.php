@@ -2,12 +2,6 @@
 
 require_once __DIR__ . '/../utils/DbManager.class.php';
 
-require_once __DIR__ . '/Blog.class.php';
-require_once __DIR__ . '/Category.class.php';
-require_once __DIR__ . '/Comment.class.php';
-require_once __DIR__ . '/Post.class.php';
-require_once __DIR__ . '/User.class.php';
-
 /**
  * The basic model class
  *

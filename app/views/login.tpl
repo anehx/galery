@@ -23,3 +23,5 @@
   </form>
   <div class="copyrights">&copy; 2016 Jonas Metzener</div>
 </div>
+
+<?php //var_dump($errors); ?>
