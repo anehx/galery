@@ -1,8 +1,7 @@
 <?php
 
-// include_once __DIR__ . '/../models/User.class.php';
-include_once __DIR__ . '/../utils/Request.class.php';
-include_once __DIR__ . '/../utils/Template.class.php';
+require_once __DIR__ . '/../utils/Request.class.php';
+require_once __DIR__ . '/../models/User.class.php';
 
 /**
  * The main controller class
@@ -13,12 +12,41 @@ include_once __DIR__ . '/../utils/Template.class.php';
  */
 class Controller {
 
-    protected static function render($tpl) {
-        echo Template::render($tpl);
+    protected function addError($msg) {
+        $this->errors[] = $msg;
     }
 
-    protected static function redirect($url) {
-        header('Location: ' . $url);
+    protected function outputErrors() {
+        if (!empty($this->errors)) {
+            echo '<div class="alert alert-danger"><ul>';
+
+            foreach ($this->errors as $e) {
+                echo "<li>$e</li>";
+            }
+
+            echo '</ul></div>';
+        }
+    }
+
+    protected $errors = array();
+
+    protected function render($tpl) {
+        $base = file_get_contents(__DIR__ . '/../views/base.html');
+
+        ob_start();
+
+        require_once __DIR__ . '/../views/' . $tpl . '.phtml';
+        $body = ob_get_contents();
+
+        ob_end_clean();
+
+        $base = str_replace('{{NAV}}', '', $base);
+        echo str_replace('{{BODY}}', $body, $base);
+        exit;
+    }
+
+    protected function redirect($url) {
+        header("Location: $url");
         exit;
     }
 
@@ -28,20 +56,20 @@ class Controller {
      * @param string $params
      * @return void
      */
-    public static function handle($params = array(), $request = null) {
+    public function handle($params = array(), $request = null) {
         if (is_null($request)) {
             $request = new Request();
         }
 
         switch ($request->method) {
             case 'GET':
-                static::get($request, $params);
+                $this->get($request, $params);
                 break;
             case 'POST':
-                static::post($request, $params);
+                $this->post($request, $params);
                 break;
             default:
-                static::get($request, $params);
+                $this->get($request, $params);
                 break;
         }
     }
@@ -53,9 +81,7 @@ class Controller {
      * @param string $params
      * @return void
      */
-    protected static function get($request, $params) {
-        return null;
-    }
+    protected function get($request, $params) {}
 
     /**
      * The post handler of this controller
@@ -64,8 +90,6 @@ class Controller {
      * @param string $params
      * @return void
      */
-    protected static function post($request, $params) {
-        return null;
-    }
+    protected function post($request, $params) {}
 
 }

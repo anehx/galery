@@ -52,6 +52,7 @@ class Request {
     public function __construct() {
         $this->method  = $_SERVER['REQUEST_METHOD'];
         $this->headers = getallheaders();
+        $this->user    = unserialize($_SESSION['user']);
 
         switch ($this->method) {
             case 'POST':
@@ -83,12 +84,11 @@ class Request {
      * Returns the value of a key in the request body
      *
      * @param string $key
-     * @throws OutOfBoundsException
      * @return mixed
      */
     public function get($key) {
         if (!isset($this->body[$key])) {
-            throw new OutOfBoundsException(sprintf('Key %s is not a valid key', $key));
+            return null;
         }
 
         return $this->body[$key];

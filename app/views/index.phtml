@@ -1,0 +1,13 @@
+<div class="container page-content">
+  <h1>Eigene Galerien</h1>
+  <div class="galery-list">
+    <?php
+        foreach ($this->galeries as $g) {
+          echo sprintf('<a class="galery-item" href="/galery/%d">%s</a>', $g->id, $g->name);
+        }
+    ?>
+    <a class="galery-item galery-item-new" title="Neue Galerie" href="/galery/new">
+      <span class="glyphicon glyphicon-plus"></span>
+    </a>
+  </div>
+</div>

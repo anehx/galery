@@ -18,7 +18,7 @@ class NotFoundController extends ProtectedController {
      * @param string $params
      * @return void
      */
-    protected static function get($request, $params) {
-        echo static::render('notfound');
+    protected function get($request, $params) {
+        $this->render('notfound');
     }
 }

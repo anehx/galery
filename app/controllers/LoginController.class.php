@@ -5,32 +5,28 @@ require_once __DIR__ . '/../models/User.class.php';
 
 class LoginController extends Controller {
 
-    protected static function get($request, $params) {
-        echo static::render('login');
+    protected function get($request, $params) {
+        $this->render('login');
     }
 
-    protected static function post($request, $params) {
-        $errors = array();
-
+    protected function post($request, $params) {
         try {
             $user = User::find(array('email' => $request->get('email')));
 
             if (password_verify($request->get('password'), $user->get('password'))) {
                 $_SESSION['isAuthenticated'] = true;
-                $_SESSION['user'] = $user;
+                $_SESSION['user'] = serialize($user);
 
-                static::redirect('/');
+                $this->redirect('/');
             }
             else {
-                $errors[] = array('type' => 'danger', 'message' => 'Wrong password');
+                $this->addError('Falsches Passwort');
             }
         }
         catch (Exception $e) {
-            var_dump($e);
-            exit;
-            $errors[] = array('type' => 'danger', 'message' => $e->getMessage());
+            $this->addError($e->getMessage());
         }
 
-        echo static::render('login');
+        $this->render('login');
     }
 }

@@ -7,7 +7,7 @@ CREATE TABLE `user` (
   `email` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `username_UNIQUE` (`username`)
+  UNIQUE KEY `email` (`email`)
 );
 
 CREATE TABLE `galery` (

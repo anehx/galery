@@ -2,7 +2,7 @@ web:
     build: .
     volumes:
         - ./app:/var/www/galery
-        - ./vhost.conf:/etc/apache2/sites-enabled/vhost.conf
+        - ./tools/httpd/vhost.conf:/etc/apache2/sites-enabled/vhost.conf
     ports:
         - "8080:80"
     links:

@@ -3,7 +3,9 @@
 require_once __DIR__ . '/ProtectedController.class.php';
 
 class GaleryController extends ProtectedController {
-    protected static function get($request, $params) {
-        static::render('galery');
+    protected function get($request, $params) {
+        $this->galery = Galery::find(array('id' => $params[0]));
+
+        $this->render('galery');
     }
 }

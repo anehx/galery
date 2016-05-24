@@ -30,13 +30,13 @@ class Router {
      * Add a new route
      *
      * @param string $pattern
-     * @param string $callback
+     * @param string $controller
      * @return void
      */
-    public function route($pattern, $callback) {
+    public function route($pattern, $controller) {
         $p = $this->base . $pattern;
 
-        $this->routes['/' . $p . '\/?$/'] = $callback;
+        $this->routes['/' . $p . '\/?$/'] = $controller;
     }
 
     /**
@@ -46,10 +46,11 @@ class Router {
      * @return mixed
      */
     public function execute($uri) {
-        foreach ($this->routes as $pattern => $callback) {
+        foreach ($this->routes as $pattern => $controller) {
             if (preg_match($pattern, $uri, $params) === 1) {
                 array_shift($params);
-                return call_user_func_array($callback, array_values($params));
+                $ctrl = new $controller();
+                return $ctrl->handle(array_values($params));
             }
         }
     }
