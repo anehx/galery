@@ -14,6 +14,7 @@ CREATE TABLE `galery` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `user_id` INT NOT NULL,
     `name` VARCHAR(50) NOT NULL,
+    `public` BOOLEAN NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     UNIQUE KEY `user_id_name_UNIQUE` (`user_id`, `name`),
     FOREIGN KEY(`user_id`) REFERENCES user(`id`) ON DELETE CASCADE

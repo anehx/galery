@@ -9,7 +9,7 @@
       </div>
       <div class="panel-body">
         <div class="form-group">
-          <input class="form-control" type="text" placeholder="Username" name="username">
+          <input class="form-control" type="email" placeholder="Email" name="email">
         </div>
         <div class="form-group">
           <input class="form-control" type="password" placeholder="Password" name="password">
@@ -23,5 +23,3 @@
   </form>
   <div class="copyrights">&copy; 2016 Jonas Metzener</div>
 </div>
-
-<?php //var_dump($errors); ?>

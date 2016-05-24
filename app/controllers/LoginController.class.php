@@ -13,12 +13,8 @@ class LoginController extends Controller {
         $errors = array();
 
         try {
-            $user = User::find(array('username' => $request->get('username')));
+            $user = User::find(array('email' => $request->get('email')));
 
-            // ???
-            // if (!is_a($user, 'User')) {
-            //     $errors[] = array('type' => 'danger', 'message' => 'Wrong username');
-            // }
             if (password_verify($request->get('password'), $user->get('password'))) {
                 $_SESSION['isAuthenticated'] = true;
                 $_SESSION['user'] = $user;
