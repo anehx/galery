@@ -9,7 +9,7 @@ web:
         - db
 
 db:
-    image: mysql
+    image: mariadb
     ports:
         - "3306:3306"
     environment:
