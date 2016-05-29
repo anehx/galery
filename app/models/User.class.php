@@ -7,13 +7,12 @@ class User extends Model {
     protected static $fields = array(
         'email'        => array(
             'type'     => 'string',
-            'required' => true,
-            'related'  => null
+            'required' => true
         ),
+
         'password'     => array(
             'type'     => 'string',
-            'required' => true,
-            'related'  => null
+            'required' => true
         )
     );
 

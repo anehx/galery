@@ -37,7 +37,7 @@ class Model {
      *
      * @return string
      */
-    private static function __getTableName() {
+    public static function getTableName() {
         return static::$tableName ? static::$tableName : strtolower(get_called_class());
     }
 
@@ -104,10 +104,9 @@ class Model {
      * Constructor of the model
      *
      * @param  array  $data
-     * @param  string $include
      * @return static
      */
-    public function __construct($data, $include = null) {
+    public function __construct($data) {
         $this->id = isset($data['id']) ? (int)$data['id'] : null;
 
         foreach (static::$fields as $field => $attr) {
@@ -118,16 +117,12 @@ class Model {
             $this->$field = $value;
         }
 
-        if ($include) {
-            foreach (explode(',', $include) as $inc) {
-                foreach (static::$fields as $k => $v) {
-                    if ($inc === strtolower($v['related'])) {
-                        $this->$inc = call_user_func_array(
-                            array($v['related'], 'find'),
-                            array(array('id' => $this->$k))
-                        );
-                    }
-                }
+        foreach (static::$fields as $k => $v) {
+            if ($v['related']) {
+                $this->$v['related_name'] = call_user_func_array(
+                    array($v['related'], 'find'),
+                    array(array('id' => $this->$k))
+                );
             }
         }
     }
@@ -181,7 +176,7 @@ class Model {
 
         $query = sprintf(
             'UPDATE %s SET %s WHERE id = :id',
-            static::__getTableName(),
+            static::getTableName(),
             join(',', array_map(function($k) { return sprintf('%s = :%s', $k, $k); }, $fieldNames))
         );
 
@@ -200,7 +195,7 @@ class Model {
     public function delete() {
         $query = sprintf(
             'DELETE FROM %s WHERE id = :id',
-            static::__getTableName()
+            static::getTableName()
         );
 
         $stmt= DbManager::prepare($query);
@@ -219,7 +214,7 @@ class Model {
 
         $query = sprintf(
             'INSERT INTO %s (%s) VALUES (%s)',
-            static::__getTableName(),
+            static::getTableName(),
             join(',', $fieldNames),
             join(',', array_map(function($k) { return ':'.$k; }, $fieldNames))
         );
@@ -241,48 +236,131 @@ class Model {
      * Finds all models in the db
      * Wrapper for query
      *
-     * @param  string $include
      * @return array
      */
-    public static function findAll($include = null) {
-        return static::query(array(), $include, null);
+    public static function findAll() {
+        return static::query(array(), null);
+    }
+
+    private static function getRelatedFields() {
+        return array_map(
+            function ($field) {
+                return $field;
+            },
+            array_filter(
+                static::$fields,
+                function($field) {
+                    return isset($field['related']);
+                }
+            )
+        );
+    }
+
+    private static function getSelects() {
+        $related = static::getRelatedFields();
+
+        return implode(', ', array_merge(
+            array(static::getTableName(). '.*'),
+            array_map(
+                // TODO
+                function($r, $i) {
+                    return implode(',', array_map(
+                        function ($f) {
+                            return $f
+                        },
+                        array_keys()
+                    ));
+                },
+                $related,
+                array_keys($related)
+            )
+        ));
+    }
+
+    private static function getJoins() {
+        $related = static::getRelatedFields();
+
+        return implode(' ', array_map(
+            function($r, $i) {
+                return sprintf(
+                    'JOIN %s AS %s ON ( %s = %s )',
+                    $r['related']::getTableName(),
+                    $r['related_name'],
+                    static::getTableName() . '.' . $i,
+                    $r['related']::getTableName() . '.id'
+                );
+            },
+            $related,
+            array_keys($related)
+        ));
+    }
+
+    private static function getBaseQuery() {
+        return sprintf(
+            'SELECT %s FROM %s %s',
+            static::getSelects(),
+            static::getTableName(),
+            static::getJoins()
+        );
+    }
+
+    private static function buildWhere($criteria) {
+        if (empty($criteria)) {
+            return '';
+        }
+
+        return 'WHERE ' . join(' AND ', array_map(
+            function($c) {
+                $key = strpos($c, '.') ? $c : static::getTableName() . '.' . $c;
+
+                return sprintf('%s = :%s', $key, $c);
+            },
+            array_keys($criteria)
+        ));
+    }
+
+    private static function buildOrdering() {
+        $val   = static::$ordering;
+        $order = strpos($val, '.') ? $val: static::getTableName() . '.' . $val;
+
+        return 'ORDER BY ' . $order;
     }
 
     /**
      * Queries db for models by given criteria
      *
      * @param  array  $criteria
-     * @param  string $include
      * @param  int    $limit
      * @return array
      */
-    public static function query($criteria, $include = null, $limit = null) {
-        $query = sprintf(
-            'SELECT * FROM %s %s %s ORDER BY %s %s',
-            self::__getTableName(),
-            !empty($criteria) ? 'WHERE' : '',
-            join(' AND ', array_map(function($k) {
-                return sprintf('%s = :%s', $k, $k);
-            }, array_keys($criteria))),
-            static::$ordering,
+    public static function query($criteria, $limit = null) {
+        $query = implode(' ', array(
+            static::getBaseQuery(),
+            static::buildWhere($criteria),
+            static::buildOrdering(),
             $limit ? 'LIMIT ' . $limit : ''
-        );
+        ));
 
         $stmt = DbManager::prepare($query);
         $stmt->execute($criteria);
 
-        return array_map(function($row) use ($include) { return new static($row, $include); }, $stmt->fetchAll());
+        var_dump($stmt->fetchAll(PDO::FETCH_OBJ));
+        exit;
+
+        return array_map(
+            function($row) { return new static($row); },
+            $stmt->fetchAll(PDO::FETCH_ASSOC)
+        );
     }
 
     /**
      * Finds a single model in the db by given criteria
      *
      * @param  array  $criteria
-     * @param  string $include
      * @return static
      */
-    public static function find($criteria, $include = null) {
-        $query = static::query($criteria, $include, 1);
+    public static function find($criteria) {
+        $query = static::query($criteria, 1);
 
         if (empty($query)) {
             throw new Exception(sprintf('No %s with this criteria found.', strtolower(get_called_class())));

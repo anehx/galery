@@ -2,23 +2,18 @@
 
 require_once __DIR__ . '/Model.class.php';
 
-class Galery extends Model {
+class Image extends Model {
 
     protected static $fields = array(
-        'user_id' => array(
+        'galery_id' => array(
             'type'         => 'int',
             'required'     => true,
-            'related'      => 'User',
-            'related_name' => 'user'
+            'related'      => 'Galery',
+            'related_name' => 'galery'
         ),
 
         'name' => array(
             'type'     => 'string',
-            'required' => true
-        ),
-
-        'public' => array(
-            'type'     => 'bool',
             'required' => true
         )
     );
