@@ -11,7 +11,7 @@ class RegisterController extends Controller {
     protected function post($request, $params) {
         try {
             try {
-                User::find(array('email' => $request->get('email')));
+                User::queryRecord(array('email' => $request->get('email')));
 
                 $this->addError('Es existiert bereits ein Benutzer mit dieser Email');
             }

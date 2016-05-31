@@ -4,6 +4,19 @@
     <a href="/galery/<?php echo $this->galery->id; ?>/edit"   class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
     <a href="/galery/<?php echo $this->galery->id; ?>/delete" class="btn btn-danger  btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
   </h1>
+  <div class="search">
+    <form method="get" class="form-inline">
+      <select class="form-control" name="tag">
+        <?php
+        foreach ($this->tags as $tag) {
+          echo sprintf('<option value="%d">%s</option>', $tag->id, $tag->name);
+        }
+        ?>
+        <option>
+      </select>
+      <button type="submit" class="btn btn-primary">Filtern</button>
+    </form>
+  </div>
   <div class="image-list">
     <div class="image-item">
       <img src="http://placekitten.com/200/400">

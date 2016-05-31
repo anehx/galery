@@ -5,13 +5,13 @@ require_once __DIR__ . '/../models/Galery.class.php';
 
 class GaleryEditController extends ProtectedController {
     protected function get($request, $params) {
-        $this->galery = Galery::find(array('id' => $params[0]));
+        $this->galery = Galery::findRecord($params[0]);
 
         $this->render('galery-edit');
     }
 
     protected function post($request, $params) {
-        $galery = Galery::find(array('id' => $params[0]));
+        $galery = Galery::findRecord($params[0]);
 
         try {
             $galery->name   = $request->get('name');

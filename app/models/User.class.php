@@ -15,6 +15,4 @@ class User extends Model {
             'required' => true
         )
     );
-
-    protected $password;
 }
