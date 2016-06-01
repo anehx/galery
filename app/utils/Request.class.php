@@ -53,6 +53,7 @@ class Request {
         $this->method  = $_SERVER['REQUEST_METHOD'];
         $this->headers = getallheaders();
         $this->user    = unserialize($_SESSION['user']);
+        $this->files   = $_FILES;
 
         switch ($this->method) {
             case 'POST':

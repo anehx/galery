@@ -1,13 +1,13 @@
 <div class="container page-content">
   <h1>Bild hochladen</h1>
-  <form method="post">
+  <form method="post" enctype="multipart/form-data">
     <div class="form-group">
-      <label for="image">Bild</label>
-      <input type="file" name="image">
+      <label for="images">Bild(er)</label>
+      <input type="file" multiple="multiple" accept="image/*" id="images" name="images[]">
     </div>
     <div class="form-group">
       <label for="tags">Tags</label>
-      <input class="form-control" type="text" id="tags" name="tags">
+      <input class="form-control" placeholder="Ferien, Italien ..." type="text" id="tags" name="tags">
     </div>
 
     <button type="submit" class="btn btn-primary">Speichern</button>

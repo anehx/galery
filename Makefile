@@ -10,3 +10,7 @@ db-shell:
 init-db:
 	@mysql -h 127.0.0.1 -P 3306 -u galery -pgalery galery < tools/sql/schema.sql
 	@mysql -h 127.0.0.1 -P 3306 -u galery -pgalery galery < tools/sql/data.sql
+
+clear-images:
+	@rm -rf app/media/*
+	@mysql -h 127.0.0.1 -P 3306 -u galery -pgalery galery <<< "DELETE FROM image;"

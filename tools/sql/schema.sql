@@ -24,6 +24,7 @@ CREATE TABLE `image` (
     `id` INT NOT NULL AUTO_INCREMENT,
     `galery_id` INT NOT NULL,
     `name` VARCHAR(50) NOT NULL,
+    `ext` VARCHAR(4) NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `name_UNIQUE` (`name`),
     FOREIGN KEY(`galery_id`) REFERENCES galery(`id`) ON DELETE CASCADE

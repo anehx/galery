@@ -8,9 +8,9 @@
     <form method="get" class="form-inline">
       <select class="form-control" name="tag">
         <?php
-        foreach ($this->tags as $tag) {
-          echo sprintf('<option value="%d">%s</option>', $tag->id, $tag->name);
-        }
+          foreach ($this->tags as $tag) {
+            echo sprintf('<option value="%d">%s</option>', $tag->id, $tag->name);
+          }
         ?>
         <option>
       </select>
@@ -18,24 +18,11 @@
     </form>
   </div>
   <div class="image-list">
-    <div class="image-item">
-      <img src="http://placekitten.com/200/400">
-    </div>
-    <div class="image-item">
-      <img src="http://placekitten.com/200/100">
-    </div>
-    <div class="image-item">
-      <img src="http://placekitten.com/700/300">
-    </div>
-    <div class="image-item">
-      <img src="http://placekitten.com/1200/700">
-    </div>
-    <div class="image-item">
-      <img src="http://placekitten.com/600/900">
-    </div>
-    <div class="image-item">
-      <img src="http://placekitten.com/1000/1200">
-    </div>
+    <?php
+      foreach ($this->images as $image) {
+        echo sprintf('<div class="image-item"><img src="%s"></div>', $image->getThumbnailUrl());
+      }
+    ?>
     <a class="image-item image-item-upload" href="/galery/1/upload">
       <span class="glyphicon glyphicon-cloud-upload"></span>
     </a>
