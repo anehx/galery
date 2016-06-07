@@ -3,7 +3,7 @@
   <div class="galery-list">
     <?php
         foreach ($this->galeries as $g) {
-          echo sprintf('<a class="galery-item" href="/galery/%d">%s</a>', $g->id, $g->name);
+          echo sprintf('<a class="galery-item" href="/galery/%d">%s</a>', $g->id, htmlspecialchars($g->name));
         }
     ?>
   </div>

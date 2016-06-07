@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 require_once __DIR__ . '/utils/Router.class.php';
 
 require_once __DIR__ . '/controllers/LoginController.class.php';
@@ -18,6 +16,7 @@ require_once __DIR__ . '/controllers/GaleryUploadController.class.php';
 require_once __DIR__ . '/controllers/GaleryDeleteController.class.php';
 
 require_once __DIR__ . '/controllers/SettingsController.class.php';
+require_once __DIR__ . '/controllers/SettingsDeleteController.class.php';
 
 require_once __DIR__ . '/controllers/NotFoundController.class.php';
 
@@ -36,7 +35,8 @@ $router->route('\/galery\/(\d+)\/edit',   'GaleryEditController');
 $router->route('\/galery\/(\d+)\/upload', 'GaleryUploadController');
 $router->route('\/galery\/(\d+)\/delete', 'GaleryDeleteController');
 
-$router->route('\/settings', 'SettingsController');
+$router->route('\/settings',         'SettingsController');
+$router->route('\/settings\/delete', 'SettingsDeleteController');
 
 $router->route('\/*', 'NotFoundController');
 

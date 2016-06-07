@@ -30,6 +30,8 @@ class ProtectedController extends Controller {
     }
 
     public function handle($params = array(), $request = null) {
+        session_start();
+
         $request = new Request();
 
         if (!$_SESSION['isAuthenticated']) {

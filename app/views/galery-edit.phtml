@@ -1,5 +1,5 @@
 <div class="container page-content">
-  <h1>Galerie '<?php echo $this->galery->name; ?>' bearbeiten</h1>
+  <h1>Galerie '<?php echo htmlspecialchars($this->galery->name); ?>' bearbeiten</h1>
   <?php $this->outputErrors(); ?>
   <form method="post">
     <div class="form-group">

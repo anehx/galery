@@ -1,6 +1,6 @@
 <div class="container page-content">
   <h1>
-    <?php echo $this->galery->name; ?>
+    <?php echo htmlspecialchars($this->galery->name); ?>
     <a href="/galery/<?php echo $this->galery->id; ?>/edit"   class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
     <a href="/galery/<?php echo $this->galery->id; ?>/delete" class="btn btn-danger  btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
   </h1>
@@ -9,7 +9,7 @@
       <select class="form-control" name="tag">
         <?php
           foreach ($this->tags as $tag) {
-            echo sprintf('<option value="%d">%s</option>', $tag->id, $tag->name);
+            echo sprintf('<option value="%d">%s</option>', $tag->id, htmlspecialchars($tag->name));
           }
         ?>
         <option>

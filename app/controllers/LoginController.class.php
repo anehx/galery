@@ -14,6 +14,8 @@ class LoginController extends Controller {
             $user = User::queryRecord(array('email' => $request->get('email')));
 
             if (password_verify($request->get('password'), $user->password)) {
+                session_start();
+                session_regenerate_id(true);
                 $_SESSION['isAuthenticated'] = true;
                 $_SESSION['user'] = serialize($user);
 

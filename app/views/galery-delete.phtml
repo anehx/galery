@@ -3,7 +3,7 @@
   <?php $this->outputErrors(); ?>
   <form method="post">
     <p>
-      Wollen Sie die Galerie '<?php echo $this->galery->name; ?>' wirklich löschen?
+      Wollen Sie die Galerie '<?php echo htmlspecialchars($this->galery->name); ?>' wirklich löschen?
     </p>
 
     <button type="submit" class="btn btn-danger">Löschen</button>

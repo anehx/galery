@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/Controller.class.php';
+require_once __DIR__ . '/ProtectedController.class.php';
 
-class LogoutController extends Controller {
+class LogoutController extends ProtectedController {
     protected function get($request, $params) {
         session_destroy();
 
