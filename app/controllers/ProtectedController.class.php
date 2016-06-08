@@ -29,14 +29,24 @@ class ProtectedController extends Controller {
         exit;
     }
 
+    protected function checkAuth($request) {
+        if (!$_SESSION['isAuthenticated']) {
+            $this->redirect('/login');
+        }
+        elseif ($_SESSION['expire'] < time()) {
+            session_unset();
+            session_destroy();
+
+            $this->redirect('/login');
+        }
+    }
+
     public function handle($params = array(), $request = null) {
         session_start();
 
         $request = new Request();
 
-        if (!$_SESSION['isAuthenticated']) {
-            $this->redirect('/login');
-        }
+        $this->checkAuth($request);
 
         parent::handle($params, $request);
     }

@@ -7,12 +7,17 @@
   <div class="search">
     <form method="get" class="form-inline">
       <select class="form-control" name="tag">
+        <option></option>
         <?php
           foreach ($this->tags as $tag) {
-            echo sprintf('<option value="%d">%s</option>', $tag->id, htmlspecialchars($tag->name));
+            echo sprintf(
+              '<option value="%d" %s>%s</option>',
+              $tag->id,
+              $tag->id === $this->tag ? 'selected' : '',
+              htmlspecialchars($tag->name)
+            );
           }
         ?>
-        <option>
       </select>
       <button type="submit" class="btn btn-primary">Filtern</button>
     </form>
@@ -20,29 +25,15 @@
   <div class="image-list">
     <?php
       foreach ($this->images as $image) {
-        echo sprintf('<div class="image-item"><img src="%s"></div>', $image->getThumbnailUrl());
+        echo sprintf('<a href="%s" class="image-item"><div class="tags">', $image->getUrl());
+        foreach ($image->tags as $tag) {
+          echo sprintf('<span class="label label-default">%s</span>', htmlspecialchars($tag->name));
+        }
+        echo sprintf('</div><img src="%s"></a>', $image->getThumbnailUrl());
       }
     ?>
-    <a class="image-item image-item-upload" href="/galery/1/upload">
+    <a class="image-item image-item-upload" href="/galery/<?php echo $this->galery->id; ?>/upload">
       <span class="glyphicon glyphicon-cloud-upload"></span>
     </a>
   </div>
 </div>
-
-<!-- add this in js
-<div class="lightbox">
-  <div class="lightbox-container container">
-    <span class="lightbox-close glyphicon glyphicon-remove-circle"></span>
-    <div class="lightbox-image">
-      <span class="lightbox-prev glyphicon glyphicon-chevron-left"></span>
-      <img src="http://placekitten.com/1920/1080">
-      <span class="lightbox-next glyphicon glyphicon-chevron-right"></span>
-    </div>
-    <div class="lightbox-tags">
-      <div class="tag">image</div>
-      <div class="tag">fun</div>
-      <div class="tag">whatever</div>
-    </div>
-  </div>
-</div>
--->

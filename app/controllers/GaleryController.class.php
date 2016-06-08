@@ -11,6 +11,15 @@ class GaleryController extends ProtectedController {
         $this->galery = Galery::findRecord($params[0]);
         $this->tags   = Tag::query(array('user_id' => $request->user->id));
         $this->images = Image::query(array('galery_id' => $this->galery->id));
+        $this->tag    = (int)$request->get('tag');
+
+        if ($this->tag) {
+            $this->images = array_filter($this->images, function($img) {
+                $ids = array_map(function($tag) { return $tag->id; }, array_values($img->tags));
+
+                return array_search($this->tag, $ids) !== false;
+            });
+        }
 
         $this->render('galery');
     }

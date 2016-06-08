@@ -16,7 +16,7 @@ class GaleryNewController extends ProtectedController {
             ));
             $galery->save();
 
-            $this->redirect('/');
+            $this->redirect('/galery/' . $galery->id);
         }
         catch (Exception $e) {
             $this->addError($e->getMessage());

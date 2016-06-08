@@ -10,11 +10,6 @@ require_once __DIR__ . '/../utils/DbManager.class.php';
  * @copyright Copyright (c) 2015, Jonas Metzener
  */
 class Model {
-
-    const EQUALS = '=';
-    const LIKE = 'LIKE';
-    const IN = 'IN';
-
     /**
      * Fields of the model (needs to be defined in child class)
      *
@@ -240,10 +235,8 @@ class Model {
         }
 
         return 'WHERE ' . join(' AND ', array_map(
-            function($c) {
-                $operator = is_array($c) ? $c['operator'] || Model::EQUALS : Model::EQUALS;
-
-                return sprintf('%s %s :%s', $c, $operator, $c);
+            function($key) {
+                return sprintf('%s = :%s', $key, $key);
             },
             array_keys($criteria)
         ));
@@ -272,6 +265,7 @@ class Model {
         ));
 
         $stmt = DbManager::prepare($query);
+
         $stmt->execute($criteria);
 
         return array_map(

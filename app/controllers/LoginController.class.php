@@ -16,8 +16,13 @@ class LoginController extends Controller {
             if (password_verify($request->get('password'), $user->password)) {
                 session_start();
                 session_regenerate_id(true);
+
+                $sessionLifetime = $request->get('keep') ?  (30 * 24 * 60 * 60) : (30 * 60);
+
                 $_SESSION['isAuthenticated'] = true;
-                $_SESSION['user'] = serialize($user);
+                $_SESSION['start']           = time();
+                $_SESSION['expire']          = $_SESSION['start'] + $sessionLifetime;
+                $_SESSION['user']            = serialize($user);
 
                 $this->redirect('/');
             }

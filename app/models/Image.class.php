@@ -10,6 +10,24 @@ class Image extends Model {
     private static $thumbnailPrefix = 'thumb';
     private static $basePath = 'media';
 
+    public function linkTags($tags) {
+        DbManager::beginTransaction();
+
+        $deleteQuery = 'DELETE FROM image_tag WHERE image_id = :image_id';
+        $deleteStmt  = DbManager::prepare($deleteQuery);
+
+        $deleteStmt->execute(array('image_id' => $this->id));
+
+        $insertQuery = 'INSERT INTO image_tag (image_id, tag_id) VALUES (:image_id, :tag_id)';
+        $insertStmt  = DbManager::prepare($insertQuery);
+
+        foreach ($tags as $tag) {
+            $insertStmt->execute(array('image_id' => $this->id, 'tag_id' => $tag->id));
+        }
+
+        DbManager::commit();
+    }
+
     public function getFilename() {
         return sprintf('%s.%s', $this->name, $this->ext);
     }
@@ -64,6 +82,27 @@ class Image extends Model {
         return move_uploaded_file($this->tmpName, $target);
     }
 
+    private function getTags() {
+        $query = 'SELECT tag_id FROM image_tag WHERE image_id = :image_id';
+        $stmt  = DbManager::prepare($query);
+
+        $stmt->execute(array('image_id' => $this->id));
+
+        $ids = array_map(
+            function($obj) {
+                return $obj['tag_id'];
+            },
+            $stmt->fetchAll(PDO::FETCH_ASSOC)
+        );
+
+        return array_map(
+            function($id) {
+                return Tag::findRecord($id);
+            },
+            $ids
+        );
+    }
+
     public function save() {
         $this->saveToFilesystem();
         parent::save();
@@ -91,6 +130,12 @@ class Image extends Model {
             'required' => true
         )
     );
+
+    public function __construct($data) {
+        parent::__construct($data);
+
+        $this->tags = $this->getTags();
+    }
 
     public static function createFromFiles($raw, $data) {
         $files  = array();
