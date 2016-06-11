@@ -13,5 +13,4 @@ and insert some test data.
 
 You should now be able to visit the app at: http://localhost:8080.
 
-Login Email: test@example.com
-Login Password: 123qwe
+Login credentials: test@example.com, 123qwe
