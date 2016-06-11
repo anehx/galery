@@ -5,10 +5,9 @@
  *
  * @author Jonas Metzener
  * @license MIT
- * @copyright Copyright (c) 2015, Jonas Metzener
+ * @copyright Copyright (c) 2016, Jonas Metzener
  */
 class DbManager {
-
     /**
      * PDO instance with given configuration
      *

@@ -3,11 +3,11 @@
 require_once __DIR__ . '/../utils/DbManager.class.php';
 
 /**
- * The basic model class
+ * The base model
  *
  * @author Jonas Metzener
  * @license MIT
- * @copyright Copyright (c) 2015, Jonas Metzener
+ * @copyright Copyright (c) 2016, Jonas Metzener
  */
 class Model {
     /**
@@ -111,8 +111,6 @@ class Model {
         foreach (static::$fields as $field => $attr) {
             $value = isset($data[$field]) ? static::__cast($attr['type'], $data[$field]) : null;
 
-            static::__validate($field, $value);
-
             $this->$field = $value;
         }
 
@@ -132,6 +130,10 @@ class Model {
      * @return static
      */
     public function save() {
+        foreach (array_keys(static::$fields) as $field) {
+            static::__validate($field, $this->$field);
+        }
+
         if (is_null($this->id)) {
             return $this->create();
         }
@@ -210,25 +212,22 @@ class Model {
         return $this;
     }
 
-
-    private static function getRelatedFields() {
-        return array_map(
-            function ($field) {
-                return $field;
-            },
-            array_filter(
-                static::$fields,
-                function($field) {
-                    return isset($field['related']);
-                }
-            )
-        );
-    }
-
+    /**
+     * Get the base query string
+     *
+     * @return string
+     */
     private static function getBaseQuery() {
         return 'SELECT * FROM ' . static::getTableName();
     }
 
+    /**
+     * Build the filter part of the query
+     * by a certain criteria
+     *
+     * @param array $criteria
+     * @return string
+     */
     private static function buildWhere($criteria) {
         if (empty($criteria)) {
             return '';
@@ -242,6 +241,12 @@ class Model {
         ));
     }
 
+    /**
+     * Build the ordering part of the query
+     *
+     * @param string $ordering
+     * @return string
+     */
     private static function buildOrdering($ordering) {
         $val   = $ordering ? $ordering : static::$ordering;
         $order = strpos($val, '.') ? $val: static::getTableName() . '.' . $val;

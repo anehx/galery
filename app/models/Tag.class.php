@@ -2,8 +2,19 @@
 
 require_once __DIR__ . '/Model.class.php';
 
+/**
+ * The tag model
+ *
+ * @author Jonas Metzener
+ * @license MIT
+ * @copyright Copyright (c) 2016, Jonas Metzener
+ */
 class Tag extends Model {
-
+    /**
+     * The fields of the tag
+     *
+     * @var array $fields
+     */
     protected static $fields = array(
         'user_id' => array(
             'type'          => 'int',
@@ -18,6 +29,14 @@ class Tag extends Model {
         )
     );
 
+    /**
+     * Create tag objects from a string by
+     * an input field (foo, bar, baz)
+     *
+     * @param string $string
+     * @param int $userId
+     * @return array
+     */
     public static function createOrGetFromString($string, $userId) {
         $names = array_map(trim, explode(',', $string));
         $tags  = array();

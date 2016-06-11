@@ -6,7 +6,21 @@ require_once __DIR__ . '/../models/Galery.class.php';
 require_once __DIR__ . '/../models/Tag.class.php';
 require_once __DIR__ . '/../models/Image.class.php';
 
+/**
+ * Controller to display a galery
+ *
+ * @author Jonas Metzener
+ * @license MIT
+ * @copyright Copyright (c) 2016, Jonas Metzener
+ */
 class GaleryController extends ProtectedController {
+    /**
+     * Display a galery
+     *
+     * @param Request $request
+     * @param array $params
+     * @return void
+     */
     protected function get($request, $params) {
         $this->galery = Galery::findRecord($params[0]);
 

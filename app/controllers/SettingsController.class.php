@@ -3,13 +3,34 @@
 require_once __DIR__ . '/ProtectedController.class.php';
 require_once __DIR__ . '/../models/User.class.php';
 
+/**
+ * Controller to edit the current user
+ *
+ * @author Jonas Metzener
+ * @license MIT
+ * @copyright Copyright (c) 2016, Jonas Metzener
+ */
 class SettingsController extends ProtectedController {
+    /**
+     * Display an user edit form
+     *
+     * @param Request $request
+     * @param array $params
+     * @return void
+     */
     protected function get($request, $params) {
         $this->user = User::findRecord($request->user->id);
 
         $this->render('settings');
     }
 
+    /**
+     * Edit the current user
+     *
+     * @param Request $request
+     * @param array $params
+     * @return void
+     */
     protected function post($request, $params) {
         try {
             $user = $request->user;

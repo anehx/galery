@@ -3,16 +3,15 @@
 require_once __DIR__ . '/ProtectedController.class.php';
 
 /**
- * The NotFoundController
+ * Controller to display a 404 page
  *
  * @author Jonas Metzener
  * @license MIT
- * @copyright Copyright (c) 2015, Jonas Metzener
+ * @copyright Copyright (c) 2016, Jonas Metzener
  */
 class NotFoundController extends ProtectedController {
-
     /**
-     * Displays a 404 error
+     * Display a 404 error
      *
      * @param Request $request
      * @param string $params
