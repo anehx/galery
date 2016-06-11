@@ -21,7 +21,7 @@ class ImageDeleteController extends ProtectedController {
     protected function get($request, $params) {
         $this->image = Image::findRecord($params[0]);
 
-        $this->checkPermission($this->image, $request);
+        $this->checkPermission($this->image->galery, $request);
 
         $this->render('image-delete');
     }
@@ -36,7 +36,7 @@ class ImageDeleteController extends ProtectedController {
     protected function post($request, $params) {
         $image = Image::findRecord($params[0]);
 
-        $this->checkPermission($image, $request);
+        $this->checkPermission($image->galery, $request);
 
         $image->delete();
 

@@ -200,6 +200,7 @@ class Image extends Model {
     public function save() {
         $this->saveToFilesystem();
         parent::save();
+    }
 
     /**
      * Create the image object

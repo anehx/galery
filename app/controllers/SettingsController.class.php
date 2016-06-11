@@ -33,7 +33,7 @@ class SettingsController extends ProtectedController {
      */
     protected function post($request, $params) {
         try {
-            $user = $request->user;
+            $user = User::findRecord($request->user->id);
 
             if (password_verify($request->get('passwordold'), $user->password)) {
                 if ($request->get('password') !== $request->get('password2')) {
@@ -41,7 +41,7 @@ class SettingsController extends ProtectedController {
                 }
 
                 $user->email    = $request->get('email');
-                $user->password = $request->get('password');
+                $user->password = password_hash($request->get('password'), PASSWORD_BCRYPT);
 
                 $user->save();
 
