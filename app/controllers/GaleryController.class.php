@@ -9,6 +9,11 @@ require_once __DIR__ . '/../models/Image.class.php';
 class GaleryController extends ProtectedController {
     protected function get($request, $params) {
         $this->galery = Galery::findRecord($params[0]);
+
+        if (!$this->galery->public) {
+            $this->checkPermission($this->galery, $request);
+        }
+
         $this->tags   = Tag::query(array('user_id' => $request->user->id));
         $this->images = Image::query(array('galery_id' => $this->galery->id));
         $this->tag    = (int)$request->get('tag');

@@ -7,11 +7,15 @@ class GaleryEditController extends ProtectedController {
     protected function get($request, $params) {
         $this->galery = Galery::findRecord($params[0]);
 
+        $this->checkPermission($this->galery, $request);
+
         $this->render('galery-edit');
     }
 
     protected function post($request, $params) {
         $galery = Galery::findRecord($params[0]);
+
+        $this->checkPermission($galery, $request);
 
         try {
             $galery->name   = $request->get('name');

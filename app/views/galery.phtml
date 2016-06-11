@@ -29,7 +29,8 @@
         foreach ($image->tags as $tag) {
           echo sprintf('<span class="label label-default">%s</span>', htmlspecialchars($tag->name));
         }
-        echo sprintf('</div><img src="%s"></a>', $image->getThumbnailUrl());
+        echo sprintf('</div><button onclick="location.href = \'/image/%s/delete\'" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></button>', $image->id);
+        echo sprintf('<img src="%s"></a>', $image->getThumbnailUrl());
       }
     ?>
     <a class="image-item image-item-upload" href="/galery/<?php echo $this->galery->id; ?>/upload">

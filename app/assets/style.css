@@ -129,6 +129,12 @@ body, html {
   top: 8px;
 }
 
+.image-item .btn-xs {
+  position: absolute;
+  right: 9px;
+  top: 8px;
+}
+
 .image-item .tags .label {
   margin-right: 5px;
 }

@@ -1,0 +1,13 @@
+<div class="container page-content">
+  <h1>Bild löschen</h1>
+  <img src="<?php echo $this->image->getThumbnailUrl(); ?>">
+  <?php $this->outputErrors(); ?>
+  <form method="post">
+    <p>
+      Wollen Sie dieses Bild wirklich löschen?
+    </p>
+
+    <button type="submit" class="btn btn-danger">Löschen</button>
+    <a href="/galery/<?php echo $this->galery->id; ?>" class="btn btn-default">Abbrechen</a>
+  </form>
+</div>

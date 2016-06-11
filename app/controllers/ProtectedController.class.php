@@ -4,6 +4,12 @@ require_once __DIR__ . '/Controller.class.php';
 require_once __DIR__ . '/../utils/Request.class.php';
 
 class ProtectedController extends Controller {
+    protected function checkPermission($obj, $request) {
+        if ($obj->user->id !== $request->user->id) {
+            $this->render('no-permission');
+        }
+    }
+
     protected function render($tpl) {
         $base = file_get_contents(__DIR__ . '/../views/base.html');
         $nav  = '';
@@ -48,6 +54,13 @@ class ProtectedController extends Controller {
 
         $this->checkAuth($request);
 
-        parent::handle($params, $request);
+        try {
+            parent::handle($params, $request);
+        }
+        catch (Exception $e) {
+            $this->addError($e->getMessage());
+
+            $this->render('error');
+        }
     }
 }
